@@ -2,6 +2,7 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class DealershipFileManager
 {
@@ -37,7 +38,7 @@ public class DealershipFileManager
                 int odometer = Integer.parseInt(vehicleParts[6]);
                 double price = Double.parseDouble(vehicleParts[7]);
 
-                Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, (BigDecimal)price);
+                Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, BigDecimal(price));
                 if (dealership != null) {
                     dealership.addVehicle(vehicle);
                 }
