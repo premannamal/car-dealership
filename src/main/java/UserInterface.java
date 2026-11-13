@@ -179,10 +179,10 @@ public void processAddVehicleRequest()
     System.out.print("Enter odometer reading: ");
     int odometer = scanner.nextInt();
     System.out.print("Enter price: ");
-    double price = scanner.nextDouble();
+    String price = scanner.nextLine();
     scanner.nextLine(); // Consume newline
 
-    Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
+    Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, new BigDecimal(price));
     this.dealership.addVehicle(newVehicle);
 
     DealershipFileManager fileManager = new DealershipFileManager();
