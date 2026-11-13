@@ -4,15 +4,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-public class DealershipFileManager
-{
+public class DealershipFileManager {
     private static final String FILE_PATH = "inventory.csv";
 
     public Dealership getDealership() {
         Dealership dealership = null;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH)))
-        {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             // 1. Read the first line for Dealership details: name|address|phone
             String dealershipLine = reader.readLine();
             if (dealershipLine != null) {
@@ -47,5 +45,8 @@ public class DealershipFileManager
         } catch (IOException e) {
             System.out.println("Error reading inventory file: " + e.getMessage());
         }
+
+    }
+
 
 }
