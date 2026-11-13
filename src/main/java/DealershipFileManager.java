@@ -45,7 +45,7 @@ public class DealershipFileManager {
         } catch (IOException e) {
             System.out.println("Error reading inventory file: " + e.getMessage());
         }
-
+     return dealership;
     }
 
 }
