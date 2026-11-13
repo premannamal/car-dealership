@@ -3,9 +3,10 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-}private Dealership dealership;
+private Dealership dealership;
 
 public UserInterface() {
+}
 
 public void display() {
     init();
@@ -74,7 +75,7 @@ private void init() {
         this.dealership = fileManager.getDealership();
     }
 
-    private void displayVehicles(List<Vehicle> vehicles) {
+    private void displayVehicles(ArrayList<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
             System.out.println("No vehicles found.");
             return;
