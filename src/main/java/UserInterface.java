@@ -96,7 +96,7 @@ public void processGetByPriceRequest()
     double max = scanner.nextDouble();
     scanner.nextLine(); // Consume newline
 
-    List<Vehicle> vehicles = this.dealership.getVehiclesByPrice(min, max);
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByPrice(min, max);
     displayVehicles(vehicles);
 }
 
@@ -107,7 +107,7 @@ public void processGetByMakeModelRequest()
     System.out.print("Enter model: ");
     String model = scanner.nextLine();
 
-    List<Vehicle> vehicles = this.dealership.getVehiclesByMakeModel(make, model);
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByMakeModel(make, model);
     displayVehicles(vehicles);
 }
 
@@ -119,7 +119,7 @@ public void processGetByYearRequest()
     int max = scanner.nextInt();
     scanner.nextLine(); // Consume newline
 
-    List<Vehicle> vehicles = this.dealership.getVehiclesByYear(min, max);
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByYear(min, max);
     displayVehicles(vehicles);
 }
 
@@ -128,7 +128,7 @@ public void processGetByColorRequest()
     System.out.print("Enter color: ");
     String color = scanner.nextLine();
 
-    List<Vehicle> vehicles = this.dealership.getVehiclesByColor(color);
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByColor(color);
     displayVehicles(vehicles);
 }
 
@@ -140,7 +140,7 @@ public void processGetByMileageRequest()
     int max = scanner.nextInt();
     scanner.nextLine(); // Consume newline
 
-    List<Vehicle> vehicles = this.dealership.getVehiclesByMileage(min, max);
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByMileage(min, max);
     displayVehicles(vehicles);
 }
 
@@ -149,7 +149,7 @@ public void processGetByVehicleTypeRequest()
     System.out.print("Enter vehicle type (car, truck, SUV, van): ");
     String type = scanner.nextLine();
 
-    List<Vehicle> vehicles = this.dealership.getVehiclesByType(type);
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByType(type);
     displayVehicles(vehicles);
 }
 
