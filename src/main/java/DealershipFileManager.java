@@ -34,7 +34,7 @@ public class DealershipFileManager {
                 String vehicleType = vehicleParts[4];
                 String color = vehicleParts[5];
                 int odometer = Integer.parseInt(vehicleParts[6]);
-                //double price = Double.parseDouble(vehicleParts[7]);
+                // double price = Double.parseDouble(vehicleParts[7]);
                 String price = vehicleParts[7];
 
                 Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, new BigDecimal(price));
