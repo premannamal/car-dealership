@@ -1,6 +1,8 @@
 import java.util.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -49,7 +51,33 @@ public class DealershipFileManager {
     }
 
     public void saveDealership(Dealership dealership) {
-        // Leave empty for now per instructions
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
+            // 1. Write the dealership header on the first line
+            String header = String.format("%s|%s|%s",
+                    dealership.getName(),
+                    dealership.getAddress(),
+                    dealership.getPhone());
+            writer.write(header);
+            writer.newLine();
+
+            // 2. Write each vehicle on its own line
+            for (Vehicle vehicle : dealership.getAllVehicles()) {
+                String vehicleLine = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f",
+                        vehicle.getVin(),
+                        vehicle.getYear(),
+                        vehicle.getMake(),
+                        vehicle.getModel(),
+                        vehicle.getVehicleType(),
+                        vehicle.getColor(),
+                        vehicle.getOdometer(),
+                        vehicle.getPrice().doubleValue());
+                writer.write(vehicleLine);
+                writer.newLine();
+            }
+        }
+            catch (IOException e) {
+                System.out.println("Error saving dealership inventory: " + e.getMessage());
+            }
     }
 }
 

@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.Scanner;
 import java.util.List;
+import java.math.BigDecimal;
 
 public class UserInterface {
 
@@ -83,7 +84,7 @@ private void init() {
         }
 
         for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle);
+            System.out.println( vehicle.getVin() + "|" + vehicle.getYear()  + "|" + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType()  + "|" + vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + vehicle.getPrice() );
         }
     }
 
@@ -155,7 +156,7 @@ public void processGetByVehicleTypeRequest()
 
 public void processGetAllVehiclesRequest()
     {
-ArrayList<Vehicle> allVehicles = this.dealership.getAllVehicles();
+    ArrayList<Vehicle> allVehicles = this.dealership.getAllVehicles();
     displayVehicles(allVehicles);
 }
 
@@ -178,9 +179,10 @@ public void processAddVehicleRequest()
 
     System.out.print("Enter odometer reading: ");
     int odometer = scanner.nextInt();
+    //consume the newline
+    scanner.nextLine();
     System.out.print("Enter price: ");
-    String price = scanner.nextLine();
-    scanner.nextLine(); // Consume newline
+    String price = scanner.nextLine().trim();
 
     Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, new BigDecimal(price));
     this.dealership.addVehicle(newVehicle);
