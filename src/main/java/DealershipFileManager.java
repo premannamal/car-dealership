@@ -39,7 +39,7 @@ public class DealershipFileManager
                 //double price = Double.parseDouble(vehicleParts[7]);
                 String price = vehicleParts[7];
 
-                Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, BigDecimal(price));
+                Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, new BigDecimal(price));
                 if (dealership != null) {
                     dealership.addVehicle(vehicle);
                 }
