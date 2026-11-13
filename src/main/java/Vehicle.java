@@ -23,81 +23,70 @@ import java.math.BigDecimal;
             this.price = price;
         }
 
-        //Settors
+        public int getVin() {
+            return vin;
+        }
 
-        public void setVin(int vin)
-        {
+        public void setVin(int vin) {
             this.vin = vin;
         }
 
-        public void setYear(int year)
-        {
+        public int getYear() {
+            return year;
+        }
+
+        public void setYear(int year) {
             this.year = year;
         }
 
-        public void setMake(String make)
-        {
+        public String getMake() {
+            return make;
+        }
+
+        public void setMake(String make) {
             this.make = make;
         }
 
-        public void setModel(String model)
-        {
+        public String getModel() {
+            return model;
+        }
+
+        public void setModel(String model) {
             this.model = model;
         }
 
-        public void setVehicleType(String vehicleType)
-        {
+        public String getVehicleType() {
+            return vehicleType;
+        }
+
+        public void setVehicleType(String vehicleType) {
             this.vehicleType = vehicleType;
         }
 
-        public void setColor(String color)
-        {
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
             this.color = color;
         }
 
-        public void setOdometer(int odometer)
-        {
+        public int getOdometer() {
+            return odometer;
+        }
+
+        public void setOdometer(int odometer) {
             this.odometer = odometer;
         }
 
-        public void setPrice(BigDecimal price)
-        {
+        public BigDecimal getPrice() {
+            return price;
+        }
+
+        public void setPrice(BigDecimal price) {
             this.price = price;
         }
 
 
-        //gettors
-        public int getVin()
-        {
-            return vin;
-        }
 
-        public int getYear()
-        {
-            return year;
-        }
-        public String getMake()
-        {
-            return make;
-        }
-        public String getModel()
-        {
-            return model;
-        }
-        public String getVehicleType()
-        {
-            return vehicleType;
-        }
-        public String getColor()
-        {
-            return color;
-        }
-        public int getOdometer()
-        {
-            return odometer;
-        }
-        public BigDecimal getPrice()
-        {
-            return price;
-        }
     }

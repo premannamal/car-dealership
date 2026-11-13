@@ -66,7 +66,7 @@ public void display() {
                 System.out.println("Exiting application...");
                 break;
             default:
-                System.out.println("Invalid command. Please try again.");
+                System.out.println("Invalid option. Please try again.");
         }
     }
 }
@@ -79,9 +79,18 @@ private void init() {
 
     private void displayVehicles(ArrayList<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
+            System.out.println("\n\n");
             System.out.println("No vehicles found.");
+            System.out.println("---------------------------------------------------------------------------------");
             return;
         }
+
+        //display header
+        System.out.println("\n");
+        System.out.println("Vehicle Listing satisfying the criteria");
+        System.out.println("---------------------------------------------------------------------------------");
+        System.out.println( "VIN  " + "|" + "YEAR "  + "|" + "MAKE " + "|" + "MODEL " + "|" + "VEHICLE TYPE " + "|" + "COLOR " + "|" + "MILEAGE " + "|" + "PRICE " );
+        System.out.println("----------------------------------------------------------------------------------");
 
         for (Vehicle vehicle : vehicles) {
             System.out.println( vehicle.getVin() + "|" + vehicle.getYear()  + "|" + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType()  + "|" + vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + vehicle.getPrice() );
@@ -98,6 +107,8 @@ public void processGetByPriceRequest()
     scanner.nextLine(); // Consume newline
 
     ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByPrice(min, max);
+    System.out.println("________________________________________");
+    System.out.println("Finding vehicles in this price range ...");
     displayVehicles(vehicles);
 }
 
@@ -216,4 +227,5 @@ public void processRemoveVehicleRequest()
     }
 }
 }
+
 
