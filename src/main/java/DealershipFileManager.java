@@ -48,5 +48,8 @@ public class DealershipFileManager {
      return dealership;
     }
 
+    public void saveDealership(Dealership dealership) {
+        // Leave empty for now per instructions
+    }
 }
 
