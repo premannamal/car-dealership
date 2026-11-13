@@ -69,8 +69,22 @@ public void display() {
 }
 
 private void init() {
-    // TODO: Load the dealership using DealershipFileManager in later phases
-}
+        // TODO: Load the dealership using DealershipFileManager in later phases
+        DealershipFileManager fileManager = new DealershipFileManager();
+        this.dealership = fileManager.getDealership();
+    }
+
+    private void displayVehicles(List<Vehicle> vehicles) {
+        if (vehicles == null || vehicles.isEmpty()) {
+            System.out.println("No vehicles found.");
+            return;
+        }
+
+        for (Vehicle vehicle : vehicles) {
+            System.out.println(vehicle);
+        }
+    }
+
 
 public void processGetByPriceRequest()
 {
@@ -97,7 +111,9 @@ public void processGetByVehicleTypeRequest()
 }
 
 public void processGetAllVehiclesRequest()
-{
+    {
+ArrayList<Vehicle> allVehicles = this.dealership.getAllVehicles();
+    displayVehicles(allVehicles);
 }
 
 public void processAddVehicleRequest()
