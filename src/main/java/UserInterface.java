@@ -125,13 +125,40 @@ public void processGetByMakeModelRequest()
 
 public void processGetByYearRequest()
 {
-    System.out.print("Enter minimum year: ");
-    int min = scanner.nextInt();
-    System.out.print("Enter maximum year: ");
-    int max = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
+    int minYear, maxYear;
 
-    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByYear(min, max);
+    //Get keyboard input for minimum year
+    while ( true ) {
+        System.out.print("Enter minimum year:");
+        try {
+            minYear = Integer.parseInt(scanner.nextLine().trim());
+            if ( minYear >= 1000 && minYear <= 9999) {
+                break;
+            } else {
+                System.out.println("Invalid value for minimum year, Please enter a 4 digit year");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid value for minimum year");
+        }
+    }
+
+    //Get keyboard input for maximum year
+    while ( true ) {
+        System.out.print("Enter maximum year:");
+        try {
+            maxYear = Integer.parseInt(scanner.nextLine().trim());
+            if ( maxYear >= 1000 && maxYear <= 9999) {
+                break;
+            } else {
+                System.out.println("Invalid value for maximum year, Please enter a 4 digit year");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid value for maximum year");
+        }
+    }
+
+
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByYear(minYear, maxYear);
     displayVehicles(vehicles);
 }
 
@@ -164,12 +191,19 @@ public void processGetByMileageRequest()
         System.out.print("Enter maximum mileage: ");
         try {
             max = Integer.parseInt(scanner.nextLine().trim());
-            break;
+            if ( max >= min )
+            {
+                break;
+            }
+            else {
+                System.out.println("Maximum mileage should be greater than or equal to Minimum mileage. Please renter Maximum mileage:");
+            }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter a valid maximum mileage");
         }
     }
 
+    System.out.println("Looking for vehicles with in that mileage range");
     ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByMileage(min, max);
     displayVehicles(vehicles);
 }
