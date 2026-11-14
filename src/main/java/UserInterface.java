@@ -158,10 +158,27 @@ public void processGetByMileageRequest()
 
 public void processGetByVehicleTypeRequest()
 {
-    System.out.print("Enter vehicle type (car, truck, SUV, van): ");
-    String type = scanner.nextLine();
+    //Get Vehicle Type from keyboard input
+    String vehicleType;
+    while (true) {
+        System.out.print("Enter vehicle type (car, truck, SUV, van): ");
+        try {
+            vehicleType = scanner.nextLine().trim();
 
-    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByType(type);
+            if (vehicleType.equalsIgnoreCase("car") ||
+                    vehicleType.equalsIgnoreCase("truck") ||
+                    vehicleType.equalsIgnoreCase("SUV") ||
+                    vehicleType.equalsIgnoreCase("van")) {
+                break; // Valid input, exit the loop
+            } else {
+                throw new IllegalArgumentException("Invalid vehicle type.");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input. Please enter car, truck, SUV, or van.");
+        }
+    }
+
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByType(vehicleType);
     displayVehicles(vehicles);
 }
 
@@ -241,9 +258,6 @@ public void processAddVehicleRequest()
         }
     }
 
-    //consume the newline
-    scanner.nextLine();
-
     //get price as keyboard input
     while (true) {
         System.out.print("Enter price: ");
@@ -261,7 +275,7 @@ public void processAddVehicleRequest()
         }
     }
 
-    Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, new BigDecimal(price));
+    Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, priceAsBigDecimal);
     this.dealership.addVehicle(newVehicle);
 
     DealershipFileManager fileManager = new DealershipFileManager();
@@ -271,9 +285,17 @@ public void processAddVehicleRequest()
 
 public void processRemoveVehicleRequest()
 {
-    System.out.print("Enter the VIN of the vehicle to remove: ");
-    int vin = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
+    int vin;
+    //Get keyboard input for VIN
+    while ( true ) {
+        System.out.print("Enter the VIN of the vehicle to remove:");
+        try {
+            vin = Integer.parseInt(scanner.nextLine().trim());
+            break;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid vin number to remove");
+        }
+    }
 
     Vehicle vehicleToRemove = null;
     for (Vehicle vehicle : this.dealership.getAllVehicles()) {
