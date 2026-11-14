@@ -173,8 +173,17 @@ public void processGetAllVehiclesRequest()
 
 public void processAddVehicleRequest()
 {
-    System.out.print("Enter VIN: ");
-    int vin = scanner.nextInt();
+    int vin;
+    while ( true ) {
+        System.out.print("Enter VIN: ");
+        try {
+            vin = Integer.parseInt(scanner.nextLine().trim());
+            break;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid vin");
+        }
+    }
+
     System.out.print("Enter year: ");
     int year = scanner.nextInt();
     scanner.nextLine(); // Consume newline
