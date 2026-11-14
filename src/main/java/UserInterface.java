@@ -173,8 +173,9 @@ public void processGetAllVehiclesRequest()
 
 public void processAddVehicleRequest()
 {
-    int vin, year;
-    String vehicleType;
+    int vin, year, odometer;
+    String vehicleType, price;
+    BigDecimal priceAsBigDecimal;
 
     //Get keyboard input for VIN
     while ( true ) {
@@ -230,12 +231,35 @@ public void processAddVehicleRequest()
     System.out.print("Enter color: ");
     String color = scanner.nextLine();
 
-    System.out.print("Enter odometer reading: ");
-    int odometer = scanner.nextInt();
+    while ( true ) {
+        System.out.print("Enter odometer reading: ");
+        try {
+            odometer = Integer.parseInt(scanner.nextLine().trim());
+            break;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid odometer reading");
+        }
+    }
+
     //consume the newline
     scanner.nextLine();
-    System.out.print("Enter price: ");
-    String price = scanner.nextLine().trim();
+
+    //get price as keyboard input
+    while (true) {
+        System.out.print("Enter price: ");
+        price = scanner.nextLine().trim();
+        try {
+            priceAsBigDecimal = new BigDecimal(price);
+
+            if (priceAsBigDecimal.compareTo(BigDecimal.ZERO) > 0) {
+                break; // Valid positive BigDecimal entered, exit the loop
+            } else {
+                System.out.println("Invalid price. Price must be greater than 0.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid numeric price (e.g., 19999.99).");
+        }
+    }
 
     Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, new BigDecimal(price));
     this.dealership.addVehicle(newVehicle);
