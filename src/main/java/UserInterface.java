@@ -100,13 +100,49 @@ private void init() {
 
 public void processGetByPriceRequest()
 {
-    System.out.print("Enter minimum price: ");
-    double min = scanner.nextDouble();
-    System.out.print("Enter maximum price: ");
-    double max = scanner.nextDouble();
-    scanner.nextLine(); // Consume newline
+    double minPrice, maxPrice;
+    String input;
 
-    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByPrice(min, max);
+    while (true) {
+        System.out.print("Enter minimum price: ");
+        input = scanner.nextLine().trim();
+
+        try {
+            minPrice = Double.parseDouble(input);
+
+            if (!Double.isNaN(minPrice) && !Double.isInfinite(minPrice) && minPrice >= 0) {
+                break; // Valid non-negative double entered, exit the loop
+            } else {
+                System.out.println("Invalid minimum price. Please enter a number 0 or greater.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input for minimum price. Please enter a valid numeric price 0 or greater.");
+        }
+    }
+
+    while (true) {
+        System.out.print("Enter maximum price: ");
+        input = scanner.nextLine().trim();
+
+        try {
+            maxPrice = Double.parseDouble(input);
+
+            if (!Double.isNaN(maxPrice) && !Double.isInfinite(maxPrice) && maxPrice >= 0) {
+
+                if (maxPrice >= minPrice) {
+                    break; // Valid non-negative double entered, exit the loop
+                } else {
+                    System.out.println("Invalid maximum price value. maximum price should be greater than or equal to minimum price");
+                }
+            } else {
+                System.out.println("Invalid maximum price. Please enter a number 0 or greater.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input for maximum price. Please enter a valid numeric price 0 or greater.");
+        }
+    }
+
+    ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByPrice(minPrice, maxPrice);
     System.out.println("________________________________________");
     System.out.println("Finding vehicles in this price range ...");
     displayVehicles(vehicles);
@@ -148,9 +184,10 @@ public void processGetByYearRequest()
         try {
             maxYear = Integer.parseInt(scanner.nextLine().trim());
             if ( maxYear >= 1000 && maxYear <= 9999) {
+                if ( maxYear >= minYear ) {
                 break;
-            } else {
-                System.out.println("Invalid value for maximum year, Please enter a 4 digit year");
+            } else { System.out.println("Invalid maximum year value. maximum year should be greater than or equal to minimum year"); } }else {
+                System.out.println("Invalid value for maximum year, Please enter a 4 digit year that is greater than or equal to minimum year");
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter a valid value for maximum year");
