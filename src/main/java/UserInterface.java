@@ -146,11 +146,29 @@ public void processGetByColorRequest()
 
 public void processGetByMileageRequest()
 {
-    System.out.print("Enter minimum mileage: ");
-    int min = scanner.nextInt();
-    System.out.print("Enter maximum mileage: ");
-    int max = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
+ int min, max;
+
+    //Get keyboard input for min
+    while ( true ) {
+        System.out.print("Enter minimum mileage: ");
+        try {
+            min = Integer.parseInt(scanner.nextLine().trim());
+            break;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid minimum mileage");
+        }
+    }
+
+    //Get keyboard input for max
+    while ( true ) {
+        System.out.print("Enter maximum mileage: ");
+        try {
+            max = Integer.parseInt(scanner.nextLine().trim());
+            break;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid maximum mileage");
+        }
+    }
 
     ArrayList<Vehicle> vehicles = this.dealership.getVehiclesByMileage(min, max);
     displayVehicles(vehicles);
