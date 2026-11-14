@@ -173,9 +173,12 @@ public void processGetAllVehiclesRequest()
 
 public void processAddVehicleRequest()
 {
-    int vin;
+    int vin, year;
+    String vehicleType;
+
+    //Get keyboard input for VIN
     while ( true ) {
-        System.out.print("Enter VIN: ");
+        System.out.print("Enter vin: ");
         try {
             vin = Integer.parseInt(scanner.nextLine().trim());
             break;
@@ -184,16 +187,46 @@ public void processAddVehicleRequest()
         }
     }
 
-    System.out.print("Enter year: ");
-    int year = scanner.nextInt();
-    scanner.nextLine(); // Consume newline
+    //Get keyboard input for YEAR
+    while ( true ) {
+        System.out.print("Enter year: ");
+        try {
+            year = Integer.parseInt(scanner.nextLine().trim());
+            if ( year >= 1000 && year <= 9999) {
+                break;
+            } else {
+                System.out.println("Invalid year, Please enter a 4 digit year");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid year");
+        }
+    }
+
 
     System.out.print("Enter make: ");
     String make = scanner.nextLine();
     System.out.print("Enter model: ");
     String model = scanner.nextLine();
-    System.out.print("Enter vehicle type (car, truck, SUV, van): ");
-    String vehicleType = scanner.nextLine();
+
+    //Get Vehicle Type from keyboard input
+    while (true) {
+        System.out.print("Enter vehicle type (car, truck, SUV, van): ");
+        try {
+            vehicleType = scanner.nextLine().trim();
+
+            if (vehicleType.equalsIgnoreCase("car") ||
+                    vehicleType.equalsIgnoreCase("truck") ||
+                    vehicleType.equalsIgnoreCase("SUV") ||
+                    vehicleType.equalsIgnoreCase("van")) {
+                break; // Valid input, exit the loop
+            } else {
+                throw new IllegalArgumentException("Invalid vehicle type.");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input. Please enter car, truck, SUV, or van.");
+        }
+    }
+
     System.out.print("Enter color: ");
     String color = scanner.nextLine();
 
