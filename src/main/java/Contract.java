@@ -4,6 +4,7 @@ public abstract class Contract {
     private String customerEmail;
     private Vehicle vehicleSold;
 
+    //Constructor method
     public Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold)
     {
         this.date = date;
