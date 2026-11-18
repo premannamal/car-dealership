@@ -1,5 +1,3 @@
-package com.dealership;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
