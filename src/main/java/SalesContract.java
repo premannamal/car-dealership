@@ -14,7 +14,7 @@ public class SalesContract extends Contract {
 
         // Convert vehicle price to BigDecimal (assuming vehicleSold.getPrice() returns double)
         // Note: If vehicleSold.getPrice() already returns BigDecimal, use it directly.
-        BigDecimal originalPrice = BigDecimal.valueOf(vehicleSold.getPrice());
+        BigDecimal originalPrice = vehicleSold.getPrice();
         BigDecimal taxRate = new BigDecimal("0.05");
 
         this.salesTaxAmount = originalPrice.multiply(taxRate).setScale(2, RoundingMode.HALF_UP);
@@ -62,7 +62,7 @@ public class SalesContract extends Contract {
 
     @Override
     public BigDecimal getTotalPrice() {
-        BigDecimal originalPrice = BigDecimal.valueOf(getVehicleSold().getPrice());
+        BigDecimal originalPrice = getVehicleSold().getPrice();
         return originalPrice
                 .add(salesTaxAmount)
                 .add(recordingFee)
@@ -80,7 +80,8 @@ public class SalesContract extends Contract {
         double annualInterestRate;
         int months;
 
-        if (getVehicleSold().getPrice() >= 10000) {
+
+        if (getVehicleSold().getPrice().compareTo(new BigDecimal("10000")) >= 0) {
             annualInterestRate = 0.0425;
             months = 48;
         } else {

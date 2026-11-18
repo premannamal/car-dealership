@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+
 public abstract class Contract {
     private String date;
     private String customerName;
@@ -55,7 +57,7 @@ public abstract class Contract {
     }
 
     // Abstract methods to be implemented by subclasses
-    public abstract double getTotalPrice();
+    public abstract BigDecimal getTotalPrice();
 
-    public abstract double getMonthlyPayment();
+    public abstract BigDecimal getMonthlyPayment();
 }
