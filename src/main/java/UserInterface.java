@@ -2,6 +2,9 @@ import java.util.*;
 import java.util.Scanner;
 import java.util.List;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class UserInterface {
 
@@ -27,6 +30,7 @@ public void display() {
         System.out.println("7 - List ALL vehicles");
         System.out.println("8 - Add a vehicle");
         System.out.println("9 - Remove a vehicle");
+        System.out.println("10 - Sell / Lease a Vehicle");
         System.out.println("99 - Quit");
         System.out.print("Enter your command: ");
 
@@ -60,6 +64,9 @@ public void display() {
                 break;
             case 9:
                 processRemoveVehicleRequest();
+                break;
+            case 10:
+                processSellOrLeaseVehicleRequest();
                 break;
             case 99:
                 running = false;
@@ -403,6 +410,123 @@ public void processRemoveVehicleRequest()
         System.out.println("No vehicle found with VIN: " + vin);
     }
 }
+
+    public void processSellOrLeaseVehicleRequest() {
+        int vin;
+
+        // 1. Get VIN and find the vehicle in inventory
+        while (true) {
+            System.out.print("Enter the VIN of the vehicle to sell/lease: ");
+            try {
+                vin = Integer.parseInt(scanner.nextLine().trim());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid numeric VIN.");
+            }
+        }
+
+        Vehicle selectedVehicle = null;
+        for (Vehicle v : this.dealership.getAllVehicles()) {
+            if (v.getVin() == vin) {
+                selectedVehicle = v;
+                break;
+            }
+        }
+
+        if (selectedVehicle == null) {
+            System.out.println("Vehicle with VIN " + vin + " was not found in inventory.");
+            return;
+        }
+
+        // 2. Collect customer and contract date info
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String date;
+
+        while (true) {
+            System.out.print("Enter contract date (YYYYMMDD) or press Enter for today: ");
+            date = scanner.nextLine().trim();
+
+            if (date.isEmpty()) {
+                date = LocalDate.now().format(dateFormatter);
+                break;
+            }
+
+            try {
+                // Parses the string to verify it is a real calendar date in YYYYMMDD format
+                LocalDate.parse(date, dateFormatter);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date. Please enter a valid date in YYYYMMDD format (e.g., 20261118).");
+            }
+        }
+
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine().trim();
+
+        System.out.print("Enter customer email: ");
+        String customerEmail = scanner.nextLine().trim();
+
+        // 3. Determine Sale vs. Lease (enforce 3-year age limit for leases)
+        int currentYear = LocalDate.now().getYear();
+        int vehicleAge = currentYear - selectedVehicle.getYear();
+        boolean canLease = vehicleAge <= 3;
+
+        String contractType;
+        while (true) {
+            System.out.print("Is this a SALE or LEASE? ");
+            contractType = scanner.nextLine().trim().toUpperCase();
+
+            if (contractType.equals("LEASE")) {
+                if (!canLease) {
+                    System.out.println("Sorry, vehicles over 3 years old (" + selectedVehicle.getYear() + ") cannot be leased. Please select SALE.");
+                } else {
+                    break;
+                }
+            } else if (contractType.equals("SALE")) {
+                break;
+            } else {
+                System.out.println("Invalid option. Please type SALE or LEASE.");
+            }
+        }
+
+        // 4. Instantiate the appropriate Contract
+        Contract contract;
+        if (contractType.equals("SALE")) {
+            boolean isFinanced;
+            while (true) {
+                System.out.print("Does the customer want to finance? (YES/NO): ");
+                String financeInput = scanner.nextLine().trim().toUpperCase();
+                if (financeInput.equals("YES") || financeInput.equals("Y")) {
+                    isFinanced = true;
+                    break;
+                } else if (financeInput.equals("NO") || financeInput.equals("N")) {
+                    isFinanced = false;
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter YES or NO.");
+                }
+            }
+            contract = new SalesContract(date, customerName, customerEmail, selectedVehicle, isFinanced);
+        } else {
+            contract = new LeaseContract(date, customerName, customerEmail, selectedVehicle);
+        }
+
+        // 5. Display summary, save contract, and remove vehicle from dealership inventory
+        System.out.println("\n--- Contract Summary ---");
+        System.out.println("Total Price: $" + contract.getTotalPrice());
+        System.out.println("Monthly Payment: $" + contract.getMonthlyPayment());
+
+        ContractDataManager contractManager = new ContractDataManager();
+        contractManager.saveContract(contract);
+
+        this.dealership.removeVehicle(selectedVehicle);
+        DealershipFileManager dealershipManager = new DealershipFileManager();
+        dealershipManager.saveDealership(this.dealership);
+
+        System.out.println("Contract saved and vehicle removed from inventory!");
+    }
+
 }
 
 
